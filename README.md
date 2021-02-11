@@ -5,4 +5,4 @@ Version 3 plots any raw data read from a folder as 1st derivative, 1st and 2nd i
 
 Version 4 then subtracts the BGR spectrum (assumed to be 1st in the folder) from the raw spectra and plots the result, takes again 1st and 2nd integrals and plots those also. Cumsums are determined and the maximum of 2nd integral is plotted, with corresponding field values also stored to variable explorer.
 
-Version 5 adds a GUI to the vaesion 4
+Version 5 adds a GUI to the version 4. A window opens up informing the user that it is time to plot EPR. First click initiates the script, but the pop-up needs to close for the results to be plotted, so I introduced a second button that prompts the user to click it to see the results.
