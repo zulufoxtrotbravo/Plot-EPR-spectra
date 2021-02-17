@@ -7,4 +7,4 @@ Version 4 then subtracts the BGR spectrum (assumed to be 1st in the folder) from
 
 Version 5 adds a GUI to the version 4. A window opens up informing the user that it is time to plot EPR. First click initiates the script, but the pop-up needs to close for the results to be plotted, so I introduced a second button that prompts the user to click it to see the results.
 
-Version 6 has a mean subtraction for all of the spectra, which handels the uneaven baselines that the Mangnettech spectrometer occasionally gives. The mean baselining is applied after plotting the raw data. This version is good in situations where manual baselining wans't done with Magnettech's software.
+Version 6 has a mean subtraction for all of the spectra, which handels the uneaven baselines that the Mangnettech spectrometer occasionally gives. The mean baselining is applied after plotting the raw data. This version is good in situations where manual baselining wans't done with Magnettech's software. Seems to quite robust for plotting manually baselined spectra also.
