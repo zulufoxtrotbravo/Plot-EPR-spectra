@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 
 
 li = []# Empty list to store the dataframes from the for loop
-#path = r'/home/mika/Documents/python_plotting/25-1-2021_PEDOT-TEMPO/25-1-2021_EPR/g/g_baselined'
-path = r'C:\Users\pathf\Documents\25-1-2021_PEDOT-TEMPO\25-1-2021_EPR\g\g_baselined' # use your path
+path = r'/home/mika/Documents/python_plotting/25-1-2021_PEDOT-TEMPO/25-1-2021_EPR/g/g'
+#path = r'C:\Users\pathf\Documents\25-1-2021_PEDOT-TEMPO\25-1-2021_EPR\g\g_baselined' # use your path
 all_files = glob.glob(path + "/*.txt") # Traverse through all files in the folder
 
 for filename in sorted(all_files):      # Read through files 1 at the time and append to li created previously
@@ -23,31 +23,38 @@ EPR_data = pd.concat(li, axis=1, ignore_index=True)     # Concatenate the df:s t
 bgr_spectrum = EPR_data.iloc[:,0:2]     # 1st and 2nd columns are made as a BGR spectrum
 bgr_spectrum = bgr_spectrum.set_index(0)    # set column 0 as new index
 bgr_spectrum.index.name = 'Field (mT)'  # Rename the index column
-bgr_spectrum.rename(columns = {1:'bgr'}, inplace=True) # Rename column 
+bgr_spectrum.rename(columns = {1:'bgr'}, inplace=True) # Rename column
+bgr_spectrum = pd.DataFrame(bgr_spectrum.iloc[:,0].subtract(bgr_spectrum.iloc[:,0].mean())) # Mean Normalise also the bgr_spectrum, convert to gd
 EPR_data = EPR_data.drop(EPR_data.columns[0:2], axis = 1) # And then dropped from the EPR data
 EPR_data = EPR_data.drop(EPR_data.columns[2::2], axis=1) # Drop unnecessary field columns also
-EPR_data = EPR_data.to_numpy()          # Convert to numpy array to reset the column numbers
-EPR_data = pd.DataFrame(EPR_data)       # and then back to df
+EPR_data = pd.DataFrame(EPR_data.to_numpy())          # Convert to numpy array to reset the column numbers, and then back to df
 EPR_data = EPR_data.set_index(0)        # set the 1st column (index=0) with field values to new index       
 EPR_data.index.name = 'Field (mT)'
+
+bgr_spectrum.plot(title='Mean Normalised BGR spectrum')
+EPR_data.plot(title='Raw EPR spectra')
 
 # Apply the mean subtraction here
 EPR_data_norm = EPR_data.iloc[:,0]              # Take index and 1st datacolumn
 EPR_data_norm = pd.DataFrame(EPR_data_norm).drop([1], axis=1) # Convert to df, then drop the data column
 
-for index in range(EPR_data.shape[1]):
-    mean_value = EPR_data.iloc[:,1].mean()
-    normalised = EPR_data.iloc[:,1].subtract(mean_value)
+for index in range(EPR_data.shape[1]):   # Take range of the shape of EPR_data along columns
+    mean_value = EPR_data.iloc[:,index].mean()
+    normalised = EPR_data.iloc[:,index].subtract(mean_value)
+    EPR_data_norm[index+1] = normalised
     
+EPR_data_norm.plot(title='Mean normalised EPR spectra')
 
+# Apply the BGR subtraction here
 EPR_data_bgr = EPR_data.iloc[:,0]               # Take index and 1st datacolumn
 EPR_data_bgr = pd.DataFrame(EPR_data_bgr)       # Convert to dataframe
 EPR_data_bgr = EPR_data_bgr.drop([1], axis=1)   # Then drop the data column for 'empty' df
 
 for index in range(EPR_data.shape[1]): # Take range of the shape of EPR_data along columns
-    result = EPR_data.iloc[:,index].subtract(bgr_spectrum.iloc[:,0]) # subtract BGR
+    result = EPR_data_norm.iloc[:,index].subtract(bgr_spectrum.iloc[:,0]) # subtract BGR
     result = pd.DataFrame(result, columns=[index])  # Convert to df
     EPR_data_bgr[index+1] = result          # Add to df holding the results
+
     
 EPR_int = EPR_data_bgr.cumsum()             # Cumsum ignores the field values, as they are indexes
 EPR_int2 = EPR_int.cumsum()
@@ -57,3 +64,9 @@ max_values.reset_index(inplace=True)            # reset index to plot scatter
 max_values.rename(columns={'index':'Experiment no.',
                            0:'DI EPR intensity (A.U.)'}, inplace=True) # rename columns
 max_values_field = pd.DataFrame(EPR_data.idxmax(axis=0))  # Field values corresponding to max_values
+
+EPR_data_bgr.plot(title='Mean normalised and BGR subtracted EPR spectra')
+EPR_int.plot(title='1st integral')
+EPR_int2.plot(title='2nd integral')
+max_values.plot(x='Experiment no.', y='DI EPR intensity (A.U.)', kind='scatter')
+del li, index, path, result, filename, df, all_files
