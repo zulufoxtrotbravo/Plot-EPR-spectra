@@ -10,3 +10,5 @@ Version 5 adds a GUI to the version 4. A window opens up informing the user that
 Version 6 has a mean subtraction for all of the spectra, which handels the uneaven baselines that the Mangnettech spectrometer occasionally gives. The mean baselining is applied after plotting the raw data. This version is good in situations where manual baselining wans't done with Magnettech's software. Seems to quite robust for plotting manually baselined spectra also.
 
 Version 7 uses a Messgebox functionality to ask if the user wants to get the EPR linewidths. Message box does not allow defining the position on the screen, so I used 'Toplevel' functionality to get it to the centre of the screen.
+
+Version 8 plots the spectra as subplots to one figure, as I did with Matlab initially.
