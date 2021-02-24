@@ -12,3 +12,5 @@ Version 6 has a mean subtraction for all of the spectra, which handels the uneav
 Version 7 uses a Messgebox functionality to ask if the user wants to get the EPR linewidths. Message box does not allow defining the position on the screen, so I used 'Toplevel' functionality to get it to the centre of the screen.
 
 Version 8 plots the spectra as subplots to one figure, as I did with Matlab initially. I implemented this only in case the BGR subtracted data is required. I also did some formatting of the subplots etc., for example all of the y-axes are in scientific notation to save space on the page. 2nd plot has y-axis label also manually added
+
+https://holypython.com/gui-with-python-checkboxes-and-radio-buttons-pysimplegui-part-ii/ is the website for the GUI
