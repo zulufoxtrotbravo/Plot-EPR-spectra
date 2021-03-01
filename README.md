@@ -15,3 +15,4 @@ Version 8 plots the spectra as subplots to one figure, as I did with Matlab init
 https://holypython.com/gui-with-python-checkboxes-and-radio-buttons-pysimplegui-part-ii/ is the website for the GUI
 
 Version 9 tries to achieve version 8 but with PySimpleGUI. The imprrovement is that the file path is not hardcoded to the script, but can be selected with a FolderBrowse method of PySimpleGUI. Also the BGR spectrum can be selectred with a FileBrowse method if BGR spectrum is not the 1st spectrum in the folder. The BGR question dialog opens 2 times, and clicking for the 2nd time initiates the plottaaja_BGR function. I have no idea why this is, probably something to do with the functions return values??
+--- TGo improve on this I think I should put the BGR selection window outside of the plottaaja_BGR function ---
