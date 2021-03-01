@@ -16,3 +16,5 @@ https://holypython.com/gui-with-python-checkboxes-and-radio-buttons-pysimplegui-
 
 Version 9 tries to achieve version 8 but with PySimpleGUI. The imprrovement is that the file path is not hardcoded to the script, but can be selected with a FolderBrowse method of PySimpleGUI. Also the BGR spectrum can be selectred with a FileBrowse method if BGR spectrum is not the 1st spectrum in the folder. The BGR question dialog opens 2 times, and clicking for the 2nd time initiates the plottaaja_BGR function. I have no idea why this is, probably something to do with the functions return values??
 --- TGo improve on this I think I should put the BGR selection window outside of the plottaaja_BGR function ---
+
+Version 10 should give the option to plot the last figure as a EPR signal amplitude vs experiment no. rather than 2nd integral vs experiment no. This would be the most robust way of showing the EPR signal vs experiment no in situations where the BGR, baselining and normalisation is questionable.
